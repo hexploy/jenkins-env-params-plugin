@@ -1,0 +1,17 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:section title="Environment Parameter Definition">
+        <f:block>
+            <f:repeatable field="environments" noAddButton="false">
+                <table style="width:100%">
+                    <f:entry title="Environment Name" field="name">
+                        <f:textbox/>
+                    </f:entry>
+                    <f:entry title="Properties" field="properties">
+                        <f:textarea/>
+                    </f:entry>
+                </table>
+            </f:repeatable>
+            <f:repeatableDeleteButton/>
+        </f:block>
+    </f:section>
+</j:jelly>
