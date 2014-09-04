@@ -10,7 +10,8 @@
 
     <groupId>org.hexploy.jenkins.plugins</groupId>
     <artifactId>environment-parameter</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
+    <url>https://github.com/hexploy/jenkins-env-params-plugin/</url>
     <packaging>hpi</packaging>
 
     <licenses>
