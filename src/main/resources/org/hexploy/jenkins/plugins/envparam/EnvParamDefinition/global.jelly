@@ -9,9 +9,13 @@
                     <f:entry title="Properties" field="properties">
                         <f:textarea/>
                     </f:entry>
+                    <f:entry title="">
+                        <div align="right">
+                            <f:repeatableDeleteButton />
+                        </div>
+                    </f:entry>
                 </table>
             </f:repeatable>
-            <f:repeatableDeleteButton/>
         </f:block>
     </f:section>
 </j:jelly>
