@@ -1,7 +1,8 @@
 package org.hexploy.jenkins.plugins.envparam;
 
 import hudson.Extension;
-import hudson.model.*;
+import hudson.model.ParameterDefinition;
+import hudson.model.ParameterValue;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -61,11 +62,13 @@ public class EnvParamDefinition extends ParameterDefinition {
         @Override
         public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
             System.out.println("EnvParamDefinition config JSON=" + json);
-            JSONArray environmentsJson = json.getJSONArray("environments");
+            JSONArray environmentsJson = JSONArray.fromObject(json.get("environments"));
             List<Environment> environmentsNew = new ArrayList<Environment>();
             for (int i = 0; i < environmentsJson.size(); i++) {
                 JSONObject jsonEnv = environmentsJson.getJSONObject(i);
-                environmentsNew.add((Environment) jsonEnv.toBean(Environment.class));
+                if (!jsonEnv.isEmpty() && !jsonEnv.isNullObject()) {
+                    environmentsNew.add((Environment) jsonEnv.toBean(Environment.class));
+                }
             }
             environments = environmentsNew;
             save();
