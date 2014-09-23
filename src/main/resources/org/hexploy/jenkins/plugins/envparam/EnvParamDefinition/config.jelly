@@ -1,3 +1,5 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:f="/lib/form">
-    <f:entry title="Environment selector parameter" description="" field="environment"/>
+    <f:entry title="Default value" field="defaultValue">
+        <f:textbox/>
+    </f:entry>
 </j:jelly>

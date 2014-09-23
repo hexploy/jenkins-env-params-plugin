@@ -4,14 +4,12 @@ import hudson.EnvVars;
 import hudson.model.AbstractBuild;
 import hudson.model.ParameterValue;
 import hudson.util.VariableResolver;
+import org.apache.log4j.Logger;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static org.hexploy.jenkins.plugins.envparam.EnvParamDefinition.EnvParamDescriptor;
 import static org.hexploy.jenkins.plugins.envparam.EnvParamDefinition.EnvParamDescriptor.Environment;
@@ -21,6 +19,8 @@ import static org.hexploy.jenkins.plugins.envparam.EnvParamDefinition.EnvParamDe
  * @date: 03.09.14
  */
 public class EnvParamValue extends ParameterValue {
+    private static final Logger LOG = Logger.getLogger(EnvParamValue.class);
+
     private Map<String, String> data;
 
     @DataBoundConstructor
@@ -41,7 +41,9 @@ public class EnvParamValue extends ParameterValue {
 
     @Override
     public void buildEnvVars(AbstractBuild<?, ?> build, EnvVars env) {
-        env.putAll(data);
+        if (data != null) {
+            env.putAll(data);
+        }
     }
 
     private static Properties searchPropertiesForEnvironment(String envName, EnvParamDescriptor descriptor) {

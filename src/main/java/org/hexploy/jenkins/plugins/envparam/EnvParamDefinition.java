@@ -5,6 +5,7 @@ import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -16,21 +17,55 @@ import java.util.List;
  * @date: 03.09.14
  */
 public class EnvParamDefinition extends ParameterDefinition {
+    private static final String ENVIRONMENT_PARAMETER_NAME = "environment";
+
+    private String defaultValue;
+
     @DataBoundConstructor
-    public EnvParamDefinition() {
-        super("environment", "");
+    public EnvParamDefinition(String defaultValue) {
+        super(ENVIRONMENT_PARAMETER_NAME, "");
+        this.defaultValue = defaultValue;
     }
 
     @Override
     public ParameterValue createValue(StaplerRequest req, JSONObject jsonObject) {
-        String env = req.getParameter("environment");
+        String env = getEnvironmentParameter(req);
         return new EnvParamValue(env, (EnvParamDescriptor) getDescriptor());
     }
 
     @Override
     public ParameterValue createValue(StaplerRequest req) {
-        String env = req.getParameter("environment");
+        String env = getEnvironmentParameter(req);
         return new EnvParamValue(env, (EnvParamDescriptor) getDescriptor());
+    }
+
+    @Override
+    public ParameterValue getDefaultParameterValue() {
+        return new EnvParamValue(getCalculatedDefaultValue(), (EnvParamDescriptor) getDescriptor());
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    private String getEnvironmentParameter(StaplerRequest req) {
+        String env = req.getParameter("environment");
+        if (StringUtils.isEmpty(env)) {
+            env = getCalculatedDefaultValue();
+        }
+        return env;
+    }
+
+    private String getCalculatedDefaultValue() {
+        if (StringUtils.isEmpty(defaultValue)) {
+            return ((EnvParamDescriptor) getDescriptor()).getEnvironments().get(0).getName();
+        } else {
+            return defaultValue;
+        }
     }
 
     @Extension
