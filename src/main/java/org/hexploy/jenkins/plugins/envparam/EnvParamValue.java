@@ -21,7 +21,7 @@ import static org.hexploy.jenkins.plugins.envparam.EnvParamDefinition.EnvParamDe
  * @date: 03.09.14
  */
 public class EnvParamValue extends ParameterValue {
-    private static Map<String, String> data;
+    private Map<String, String> data;
 
     @DataBoundConstructor
     public EnvParamValue(String envName, EnvParamDescriptor descriptor) {
@@ -58,6 +58,11 @@ public class EnvParamValue extends ParameterValue {
             //never happened
         }
         return properties;
+    }
+
+    @Override
+    public String toString() {
+        return "EnvParam=" + data.get("environment");
     }
 }
 
