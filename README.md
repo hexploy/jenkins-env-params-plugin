@@ -1,6 +1,6 @@
 jenkins-env-params-plugin
 =========================
 
-Jenkins plugin which adds parameter to choose environment.
-Environments and its properties configuring in global settings.
-After you choose environment for a build every property for this environment will be in the build parameters.
+Jenkins plugin. This plugin allows to choose environment as parameter of a job.
+Environments and their properties can be configured via global jenkins settings.
+Every property of chosen environment will be available as an usual build parameter.
