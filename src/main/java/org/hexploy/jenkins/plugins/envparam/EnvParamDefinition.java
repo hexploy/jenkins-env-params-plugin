@@ -3,6 +3,7 @@ package org.hexploy.jenkins.plugins.envparam;
 import hudson.Extension;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
+import hudson.util.ListBoxModel;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -108,6 +109,14 @@ public class EnvParamDefinition extends ParameterDefinition {
             environments = environmentsNew;
             save();
             return true;
+        }
+
+        public ListBoxModel doFillDefaultValueItems() {
+            ListBoxModel envList = new ListBoxModel();
+            for (Environment environment : environments) {
+                envList.add(environment.getName());
+            }
+            return envList;
         }
 
         public static class Environment {
